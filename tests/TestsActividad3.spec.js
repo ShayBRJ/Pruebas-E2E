@@ -27,18 +27,23 @@ test("Estados y Filtros", async ({page}) => {
 
   // 4 - Seleccionamos el apartado de Activas y vemos las tareas pendientes.
   await page.getByRole('link', {name: "Active"}).click();
-  for( const item of await page.locator(".todo-list").getByRole("listitem").all()) {
-    await expect(await item.getByRole('checkbox')).not.toBeChecked();
+  const PENDIENTES = page.getByTestId('todo-item');
+  await expect(PENDIENTES).toHaveCount(tareas.length - 1);
+  for (let i = 0; i < await PENDIENTES.count(); i++) {
+      const checkbox = PENDIENTES.nth(i).getByRole('checkbox');
+      await expect(checkbox).not.toBeChecked();
   }
-
-
+    
   // 5 - Seleccionamos el apartado de Completados y vemos las tareas completadas.
   await page.getByRole('link', {name: "Completed"}).click();
-  for( const item of await page.locator(".todo-list").getByRole("listitem").all()) {
-    await expect(await item.getByRole('checkbox')).toBeChecked();
+  const COMPLETADOS = page.getByTestId('todo-item');
+  await expect(COMPLETADOS).toHaveCount(1);
+  for (let i = 0; i < await COMPLETADOS.count(); i++) {
+    const checkbox = COMPLETADOS.nth(i).getByRole('checkbox');
+    await expect(checkbox).toBeChecked();
   }
 
-  // 6 - Seleccionamos el apartado de Completados y vemos las tareas completadas.
+  // 6 - Seleccionamos el apartado de Todas y vemos todas las tareas.
   await page.getByRole('link', {name: "All"}).click();
   await expect(await page.locator(".todo-list").getByRole("listitem")).toHaveCount(tareas.length);
 

@@ -27,7 +27,7 @@ test("Verificar contenido en algún elemento de la lista", async ({page}) => {
   // Verificamos si hay una tarea relacionada con Docker.
   const PALABRA = "Docker";
   const expresion_regular = new RegExp(PALABRA, "i");
-  expect(LISTA.filter({ hasText: expresion_regular})).not.toHaveCount(0);
+  await expect(LISTA.filter({ hasText: expresion_regular})).not.toHaveCount(0);
   page.close();
 });
 
