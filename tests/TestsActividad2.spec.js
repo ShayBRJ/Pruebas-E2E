@@ -1,5 +1,4 @@
 import {test, expect} from "@playwright/test";
-import { exec } from "node:child_process";
 
 test("Creación de una tarea", async ({page}) => {
 
